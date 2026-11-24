@@ -1,0 +1,450 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShopEase | Online Shopping</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#090710;--card:#151120;--border:#30253f;
+  --purple:#9b65ff;--text:#f8f5ff;--muted:#aaa2b8;
+}
+body{background:var(--bg);color:var(--text);font-family:Arial,sans-serif;line-height:1.6}
+button,input,select{font:inherit}
+button,a{cursor:pointer}
+a{color:inherit;text-decoration:none}
+.container{width:min(1150px,92%);margin:auto}
+header{background:#100c1bea;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+nav{min-height:75px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:bold;color:white}
+.logo span{color:var(--purple)}
+.navlinks{display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.navlinks a:hover{color:var(--purple)}
+input,select{background:#100d18;color:white;border:1px solid var(--border);padding:11px;border-radius:9px;max-width:100%}
+.search{width:230px}
+.btn{display:inline-block;background:linear-gradient(120deg,#b184ff,#7134e8);border:0;color:white;padding:11px 19px;border-radius:9px;font-weight:bold;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 5px 22px #8b4cff55}
+.outline{background:transparent;border:1px solid var(--border)}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center;padding-top:65px;padding-bottom:55px}
+.eyebrow{color:#bb9aff;letter-spacing:2px;font-size:12px;font-weight:bold}
+h1,h2,h3{line-height:1.25}
+h1{font-size:clamp(36px,5vw,62px);margin:15px 0}
+h1 span{color:var(--purple)}
+p{color:var(--muted);margin:12px 0}
+.hero img{width:100%;height:390px;object-fit:cover;border-radius:22px;border:1px solid var(--border)}
+section{scroll-margin-top:95px}
+.hero .btn{margin-top:15px}
+.stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.stats strong{display:block;font-size:20px}
+.section{padding:38px 0}
+.heading{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}
+.heading h2{font-size:29px}
+.categories{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
+.category{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:22px 12px;text-align:center;cursor:pointer;transition:.2s}
+.category:hover{border-color:var(--purple);transform:translateY(-3px)}
+.category .emoji{font-size:30px}
+.category h3{margin-top:8px;font-size:15px}
+.products{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.product{background:var(--card);border:1px solid var(--border);border-radius:15px;overflow:hidden;position:relative;transition:.25s}
+.product:hover{transform:translateY(-4px);border-color:var(--purple)}
+.product img{width:100%;height:220px;object-fit:cover;background:#21192c}
+.product-info{padding:14px}
+.product-info h3{font-size:16px;margin:5px 0}
+.tag{font-size:12px;color:#c5a6ff}
+.rating{color:#ffc968;font-size:13px}
+.price{font-size:17px;font-weight:bold;margin-top:8px}
+.old{color:#8c8398;text-decoration:line-through;font-size:13px;margin-left:5px}
+.heart{position:absolute;top:10px;right:10px;background:#100c1be8;color:white;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;font-size:19px}
+.heart.active{color:#ff7ca8}
+.product .btn{width:100%;margin-top:12px}
+.promo{padding:35px;border:1px solid #53387b;border-radius:20px;background:radial-gradient(ellipse at right,#582c8c70,transparent 65%),var(--card)}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px}
+.toolbar input{flex:1;min-width:170px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:15px;padding:23px;margin-bottom:20px}
+.cart-item{display:flex;align-items:center;gap:15px;border-bottom:1px solid var(--border);padding:14px 0}
+.cart-item img{width:80px;height:80px;object-fit:cover;border-radius:10px}
+.cart-item .details{flex:1}
+.qty{display:flex;gap:12px;align-items:center;margin:8px 0}
+.qty button{background:#332248;border:0;color:white;padding:3px 11px;border-radius:6px}
+.remove{background:transparent;border:0;color:#ff8cac;margin-top:5px}
+.cart-layout{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+label{display:block;font-size:14px;margin:12px 0}
+form input,form select{width:100%;margin-top:6px}
+.summary-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0}
+footer{margin-top:55px;border-top:1px solid var(--border);padding:35px 0;text-align:center}
+footer a{color:#c4a1ff;margin:0 8px}
+.toast{position:fixed;bottom:20px;right:20px;background:#382052;border:1px solid var(--purple);padding:14px 20px;border-radius:10px;z-index:50;display:none;max-width:90%}
+.toast.show{display:block}
+.empty{text-align:center;padding:35px;color:var(--muted)}
+.hidden{display:none!important}
+#checkout{max-width:750px}
+#checkout input[type=radio]{width:auto;margin-right:7px}
+.success{background:#143326;border:1px solid #3c8a65;border-radius:12px;padding:25px}
+@media(max-width:850px){
+ .hero{grid-template-columns:1fr;padding-top:35px}
+ .hero img{height:300px}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .categories{grid-template-columns:repeat(3,1fr)}
+ .cart-layout{grid-template-columns:1fr}
+ nav{padding:12px 0}
+}
+@media(max-width:500px){
+ .navlinks{gap:12px;font-size:13px}
+ .search{width:100%}
+ .products{gap:10px}
+ .product img{height:155px}
+ .product-info{padding:10px}
+ .categories{grid-template-columns:repeat(2,1fr)}
+ .heading h2{font-size:23px}
+ .hero img{height:240px}
+ .cart-item img{width:65px;height:65px}
+}
+</style>
+</head>
+
+<body>
+<header>
+ <nav class="container">
+  <a class="logo" href="#home">Shop<span>Ease.</span></a>
+  <input class="search" id="search" type="search" placeholder="Search products..." aria-label="Search products">
+  <div class="navlinks">
+   <a href="#home">Home</a>
+   <a href="#shop">Shop</a>
+   <a href="#categories">Categories</a>
+   <a href="#wishlist">♡ Wishlist <b id="wishCount">0</b></a>
+   <a href="#cart">🛒 Cart <b id="cartCount">0</b></a>
+  </div>
+ </nav>
+</header>
+
+<main>
+<section class="hero container" id="home">
+ <div>
+  <span class="eyebrow">THE NEXT LEVEL OF SHOPPING</span>
+  <h1>Discover Products <span>You'll Love.</span></h1>
+  <p>Explore stylish fashion, smart electronics, beauty essentials and beautiful home accessories—all in one place.</p>
+  <a class="btn" href="#shop">Shop Now →</a>
+  <div class="stats">
+   <div><strong>500+</strong><small>Products to discover</small></div>
+   <div><strong>4.9/5</strong><small>Demo store rating</small></div>
+  </div>
+ </div>
+ <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1000&q=85" alt="Modern fashion shopping store">
+</section>
+
+<section class="container section" id="categories">
+ <div class="heading"><h2>Shop by Category</h2></div>
+ <div class="categories">
+  <div class="category" data-category="Fashion"><div class="emoji">👕</div><h3>Fashion</h3></div>
+  <div class="category" data-category="Electronics"><div class="emoji">🎧</div><h3>Electronics</h3></div>
+  <div class="category" data-category="Beauty"><div class="emoji">✨</div><h3>Beauty</h3></div>
+  <div class="category" data-category="Accessories"><div class="emoji">👜</div><h3>Accessories</h3></div>
+  <div class="category" data-category="Home"><div class="emoji">🏠</div><h3>Home Decor</h3></div>
+ </div>
+</section>
+
+<section class="container section" id="shop">
+ <div class="heading"><div><span class="eyebrow">OUR COLLECTION</span><h2>Explore Products</h2></div></div>
+ <div class="toolbar">
+  <input id="shopSearch" type="search" placeholder="Search by product name...">
+  <select id="categoryFilter" aria-label="Filter category">
+   <option value="All">All Categories</option>
+   <option>Fashion</option><option>Electronics</option><option>Beauty</option><option>Accessories</option><option>Home</option>
+  </select>
+  <select id="sortFilter" aria-label="Sort products">
+   <option value="featured">Featured</option>
+   <option value="low">Price: Low to High</option>
+   <option value="high">Price: High to Low</option>
+   <option value="rating">Top Rated</option>
+  </select>
+ </div>
+ <p id="resultCount"></p>
+ <div class="products" id="productList"></div>
+ <div class="empty hidden" id="noResults">No products found. Try another search.</div>
+</section>
+
+<section class="container section" id="wishlist">
+ <div class="heading"><h2>My Wishlist ♡</h2></div>
+ <div class="products" id="wishlistList"></div>
+ <p id="wishlistEmpty" class="empty">Your wishlist is empty. Tap ♡ on a product to save it.</p>
+</section>
+
+<section class="container section" id="cart">
+ <div class="heading"><h2>Shopping Cart 🛒</h2></div>
+ <div class="cart-layout">
+  <div class="panel"><div id="cartItems"></div></div>
+  <div class="panel">
+   <h3>Order Summary</h3>
+   <div class="summary-row"><span>Subtotal</span><strong id="subtotal">Rs. 0</strong></div>
+   <div class="summary-row"><span>Delivery</span><strong id="delivery">Rs. 200</strong></div>
+   <hr style="border-color:var(--border);margin:12px 0">
+   <div class="summary-row"><strong>Total</strong><strong id="total">Rs. 200</strong></div>
+   <button class="btn" style="width:100%;margin-top:15px" id="checkoutBtn">Proceed to Checkout →</button>
+   <p><small>Demo checkout only. No real payment is processed.</small></p>
+  </div>
+ </div>
+</section>
+
+<section class="container section hidden" id="checkout">
+ <div class="heading"><h2>Secure Checkout</h2></div>
+ <div class="panel">
+  <form id="checkoutForm">
+   <label>Full Name<input name="name" required minlength="2" placeholder="Enter your full name"></label>
+   <label>Email Address<input name="email" type="email" required placeholder="you@example.com"></label>
+   <label>Phone Number<input name="phone" type="tel" required minlength="7" placeholder="Enter phone number"></label>
+   <label>Shipping Address<input name="address" required placeholder="House number, street and area"></label>
+   <label>City<input name="city" required placeholder="Enter your city"></label>
+   <label>Delivery Option
+    <select id="deliveryOption" name="delivery">
+     <option value="200">Standard Delivery — Rs. 200</option>
+     <option value="500">Express Delivery — Rs. 500</option>
+    </select>
+   </label>
+   <label>Demo Payment Method
+    <select name="payment">
+     <option value="Cash on Delivery (Demo)">Cash on Delivery (Demo)</option>
+     <option value="Simulated Online Payment">Simulated Online Payment (No Charge)</option>
+    </select>
+   </label>
+   <label><input type="checkbox" required style="width:auto"> I confirm my order details.</label>
+   <p class="demo-notice">Demo only: no card information is collected, and no real payment or delivery is arranged.</p>
+   <button class="btn" type="submit">Place Demo Order</button>
+   <button class="btn outline" type="button" id="backToCart">Back to Cart</button>
+  </form>
+ </div>
+ <div id="confirmation" class="success hidden" aria-live="polite"></div>
+</section>
+
+<section class="container section" id="about">
+ <div class="promo">
+  <span class="eyebrow">WHY SHOPEASE?</span>
+  <h2>Shopping made simple.</h2>
+  <p>A modern e-commerce portfolio project built with HTML, CSS and JavaScript.</p>
+  <p>Enjoy easy browsing, saved favorites, an interactive cart and a smooth demo checkout experience.</p>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container">
+  <a class="logo" href="#home">Shop<span>Ease.</span></a>
+  <p>Discover your next favorite product.</p>
+  <a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About Us</a><a href="mailto:hello@example.com">Contact</a>
+  <p><small>© 2026 ShopEase | Educational portfolio demo</small></p>
+ </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const products = [
+ {id:1,name:"Classic Hoodie",cat:"Fashion",price:2400,old:3200,rating:4.8,img:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=600&q=80"},
+ {id:2,name:"Wireless Headphones",cat:"Electronics",price:4800,old:6000,rating:4.9,img:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80"},
+ {id:3,name:"Skincare Essentials",cat:"Beauty",price:1850,old:2500,rating:4.7,img:"https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=80"},
+ {id:4,name:"Everyday Handbag",cat:"Accessories",price:3500,old:4200,rating:4.6,img:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=600&q=80"},
+ {id:5,name:"Modern Table Lamp",cat:"Home",price:2900,old:3600,rating:4.8,img:"https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80"},
+ {id:6,name:"Classic Watch",cat:"Electronics",price:6200,old:7800,rating:4.7,img:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"},
+ {id:7,name:"Cotton T-Shirt",cat:"Fashion",price:1250,old:1700,rating:4.5,img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=600&q=80"},
+ {id:8,name:"Signature Fragrance",cat:"Beauty",price:3200,old:4000,rating:4.8,img:"https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80"},
+ {id:9,name:"Stylish Sunglasses",cat:"Accessories",price:1650,old:2200,rating:4.6,img:"https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&q=80"},
+ {id:10,name:"Ceramic Vase",cat:"Home",price:1950,old:2600,rating:4.7,img:"https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=600&q=80"},
+ {id:11,name:"Bluetooth Speaker",cat:"Electronics",price:2700,old:3400,rating:4.5,img:"https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=600&q=80"},
+ {id:12,name:"Classic Sneakers",cat:"Fashion",price:3900,old:4900,rating:4.8,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80"}
+];
+
+const money = n => "Rs. " + n.toLocaleString("en-PK");
+const load = (key,fallback) => {
+ try { const value=JSON.parse(localStorage.getItem(key));return value??fallback; }
+ catch{return fallback;}
+};
+let cart = load("se_cart",[]);
+let wishlist = load("se_wishlist",[]);
+if(!Array.isArray(cart)) cart=[];
+if(!Array.isArray(wishlist)) wishlist=[];
+cart=cart.filter(x=>products.some(p=>p.id===Number(x.id))).map(x=>({id:Number(x.id),qty:Math.max(1,Math.min(99,Number(x.qty)||1))}));
+wishlist=[...new Set(wishlist.map(Number).filter(id=>products.some(p=>p.id===id)))];
+
+function persist(){
+ try{
+  localStorage.setItem("se_cart",JSON.stringify(cart));
+  localStorage.setItem("se_wishlist",JSON.stringify(wishlist));
+ }catch{notify("Browser storage unavailable.");}
+}
+function notify(message){
+ const t=document.getElementById("toast");
+ t.textContent=message;t.classList.add("show");
+ clearTimeout(notify.timer);
+ notify.timer=setTimeout(()=>t.classList.remove("show"),2500);
+}
+function getProduct(id){return products.find(p=>p.id===Number(id));}
+function subtotal(){return cart.reduce((sum,item)=>sum+getProduct(item.id).price*item.qty,0);}
+function updateCounts(){
+ document.getElementById("cartCount").textContent=cart.reduce((s,x)=>s+x.qty,0);
+ document.getElementById("wishCount").textContent=wishlist.length;
+}
+function card(p){
+ const saved=wishlist.includes(p.id);
+ const percent=Math.round((1-p.price/p.old)*100);
+ return `<article class="product">
+  <img src="${p.img}" alt="${p.name}" loading="lazy">
+  <button class="heart ${saved?"active":""}" data-wish="${p.id}" aria-label="Toggle ${p.name} wishlist">${saved?"♥":"♡"}</button>
+  <div class="product-info">
+   <span class="tag">${p.cat} · ${percent}% OFF</span>
+   <h3>${p.name}</h3>
+   <div class="rating">★ ${p.rating} / 5</div>
+   <div class="price">${money(p.price)} <span class="old">${money(p.old)}</span></div>
+   <button class="btn" style="margin-top:12px;width:100%" data-add="${p.id}">＋ Add to Cart</button>
+   <button class="btn outline" style="margin-top:7px;width:100%" data-view="${p.id}">Quick View</button>
+  </div>
+ </article>`;
+}
+function renderProducts(){
+ let list=[...products];
+ const q=(document.getElementById("shopSearch").value+" "+document.getElementById("search").value).trim().toLowerCase();
+ const category=document.getElementById("categoryFilter").value;
+ const sort=document.getElementById("sortFilter").value;
+ if(q)list=list.filter(p=>(p.name+" "+p.cat).toLowerCase().includes(q));
+ if(category!=="All")list=list.filter(p=>p.cat===category);
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);
+ if(sort==="high")list.sort((a,b)=>b.price-a.price);
+ if(sort==="rating")list.sort((a,b)=>b.rating-a.rating);
+ document.getElementById("productList").innerHTML=list.map(card).join("");
+ document.getElementById("resultCount").textContent=list.length+" products found";
+ document.getElementById("noResults").classList.toggle("hidden",list.length!==0);
+}
+function renderWishlist(){
+ const list=products.filter(p=>wishlist.includes(p.id));
+ document.getElementById("wishlistList").innerHTML=list.map(card).join("");
+ document.getElementById("wishlistEmpty").classList.toggle("hidden",list.length!==0);
+}
+function renderCart(){
+ const host=document.getElementById("cartItems");
+ if(!cart.length){
+  host.innerHTML='<div class="empty">Your cart is empty. <a href="#shop" style="color:#b99aff">Start shopping →</a></div>';
+ }else{
+  host.innerHTML=cart.map(item=>{
+   const p=getProduct(item.id);
+   return `<div class="cart-item">
+    <img src="${p.img}" alt="${p.name}">
+    <div class="details"><strong>${p.name}</strong><p>${money(p.price)}</p>
+     <div class="qty">
+      <button data-qty="-1" data-id="${p.id}" aria-label="Decrease ${p.name} quantity">−</button>
+      <span>${item.qty}</span>
+      <button data-qty="1" data-id="${p.id}" aria-label="Increase ${p.name} quantity">+</button>
+     </div>
+     <button class="remove" data-remove="${p.id}">Remove</button>
+    </div>
+    <strong>${money(p.price*item.qty)}</strong>
+   </div>`;
+  }).join("");
+ }
+ const delivery=Number(document.getElementById("deliveryOption").value);
+ document.getElementById("subtotal").textContent=money(subtotal());
+ document.getElementById("delivery").textContent=money(delivery);
+ document.getElementById("total").textContent=money(subtotal()+delivery);
+ updateCounts();
+}
+function refresh(){
+ persist();updateCounts();renderProducts();renderWishlist();renderCart();
+}
+document.addEventListener("click",e=>{
+ const add=e.target.closest("[data-add]");
+ const wish=e.target.closest("[data-wish]");
+ const qty=e.target.closest("[data-qty]");
+ const remove=e.target.closest("[data-remove]");
+ const view=e.target.closest("[data-view]");
+ if(add){
+  const id=Number(add.dataset.add);
+  const item=cart.find(x=>x.id===id);
+  if(item)item.qty=Math.min(99,item.qty+1);else cart.push({id,qty:1});
+  refresh();notify("Product added to cart!");
+ }
+ if(wish){
+  const id=Number(wish.dataset.wish);
+  if(wishlist.includes(id)){wishlist=wishlist.filter(x=>x!==id);notify("Removed from wishlist");}
+  else{wishlist.push(id);notify("Added to wishlist!");}
+  refresh();
+ }
+ if(qty){
+  const id=Number(qty.dataset.id),item=cart.find(x=>x.id===id);
+  if(item){
+   item.qty+=Number(qty.dataset.qty);
+   if(item.qty<=0)cart=cart.filter(x=>x.id!==id);
+   item.qty=Math.min(99,item.qty);
+   refresh();
+  }
+ }
+ if(remove){
+  cart=cart.filter(x=>x.id!==Number(remove.dataset.remove));
+  refresh();notify("Product removed");
+ }
+ if(view){
+  const p=getProduct(view.dataset.view);
+  alert(p.name+"\nPrice: "+money(p.price)+"\nRating: "+p.rating+"/5\n\n"+p.cat+"\n\nThis is a product quick-view demo.");
+ }
+ const category=e.target.closest("[data-category]");
+ if(category){
+  document.getElementById("categoryFilter").value=category.dataset.category;
+  renderProducts();document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+ }
+});
+document.getElementById("search").addEventListener("input",()=>{
+ document.getElementById("shopSearch").value="";
+ renderProducts();
+});
+document.getElementById("shopSearch").addEventListener("input",()=>{
+ document.getElementById("search").value="";
+ renderProducts();
+});
+document.getElementById("categoryFilter").addEventListener("change",renderProducts);
+document.getElementById("sortFilter").addEventListener("change",renderProducts);
+document.getElementById("deliveryOption").addEventListener("change",renderCart);
+
+document.getElementById("checkoutBtn").addEventListener("click",()=>{
+ if(!cart.length){notify("Your cart is empty!");return;}
+ document.getElementById("checkout").classList.remove("hidden");
+ document.getElementById("checkout").scrollIntoView({behavior:"smooth"});
+});
+document.getElementById("backToCart").addEventListener("click",()=>{
+ document.getElementById("checkout").classList.add("hidden");
+ document.getElementById("cart").scrollIntoView({behavior:"smooth"});
+});
+document.getElementById("checkoutForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const form=e.currentTarget;
+ if(!form.reportValidity())return;
+ if(!cart.length){notify("Your cart is empty!");return;}
+ const data=new FormData(form);
+ const orderId="DEMO-"+Date.now().toString().slice(-7);
+ const total=subtotal()+Number(document.getElementById("deliveryOption").value);
+ const customer=String(data.get("name")).replace(/[&<>"']/g,"");
+ document.getElementById("confirmation").innerHTML=
+  "<h2>✓ Order Confirmed!</h2>"+
+  "<p>Thank you, "+customer+"!</p>"+
+  "<p>Demo order number: "+orderId+"</p>"+
+  "<p>Total: "+money(total)+"</p>"+
+  "<p>Payment: "+String(data.get("payment"))+"</p>"+
+  "<p>No real payment was made and no delivery has been arranged.</p>"+
+  '<button class="btn" id="continueShopping">Continue Shopping</button>';
+ document.getElementById("confirmation").classList.remove("hidden");
+ form.classList.add("hidden");
+ cart=[];persist();refresh();
+ document.getElementById("confirmation").scrollIntoView({behavior:"smooth"});
+});
+document.addEventListener("click",e=>{
+ if(e.target.id==="continueShopping"){
+  document.getElementById("checkout").classList.add("hidden");
+  document.getElementById("checkoutForm").reset();
+  document.getElementById("checkoutForm").classList.remove("hidden");
+  document.getElementById("confirmation").classList.add("hidden");
+  document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+ }
+});
+
+refresh();
+</script>
+</body>
+</html>
