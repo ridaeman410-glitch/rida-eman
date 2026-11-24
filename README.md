@@ -1,2 +1,10 @@
 # rida-eman
-The Travel & Tourism website is designed to provide information about beautiful tourist destinations in Pakistan. It helps visitors explore famous places such as Murree, Naran, Kaghan, Skardu, Swat and Kalam. The website is created using HTML and CSS with an attractive teal, green and white colour theme. It includes a navigation bar, beautiful travel pictures, tour packages, package prices, a booking form and a Google Map showing Murree. Visitors can view different travel packages, check their duration and prices, and enter their details in the booking form. The website also has a responsive design, which makes it easy to use on computers, tablets and mobile phones. The main purpose of this website is to promote tourism in Pakistan and encourage people to explore its natural beauty.
+### **Introduction – ShopEase Website**
+
+ShopEase is a modern and user-friendly online shopping website designed to make shopping easy, comfortable, and enjoyable for everyone. This website provides a variety of products in different categories, including fashion, electronics, beauty products, accessories, and home decor. Customers can explore different products, view their prices, ratings, and discount offers, and choose their favourite items according to their needs.
+
+The website is developed using three main web technologies: HTML, CSS, and JavaScript. HTML is used to create the structure of the website, CSS is used to design its layout, colours, and appearance, while JavaScript makes the website interactive and functional. It has an attractive dark purple and black colour theme that gives it a modern and professional look.
+
+ShopEase includes several useful features, such as a product search option, category filters, price sorting, a wishlist, and a shopping cart. Users can add products to their cart, increase or decrease product quantities, remove items, and view the total bill automatically. It also includes a demo checkout form where customers can enter their name, email, phone number, and delivery address to complete a sample order.
+
+The main purpose of this project is to provide a simple and convenient online shopping experience. It also helps demonstrate how HTML, CSS, and JavaScript can be used together to create an attractive and responsive e-commerce website.
